@@ -14,11 +14,12 @@ from app.models import (
     AskRequest,
     AskResponse,
     ClearResponse,
+    DocumentInfo,
     ExportRequest,
     SearchResult,
     UploadResponse,
 )
-from app.retrieval.store import add_chunks, clear_all, search as search_chunks
+from app.retrieval.store import add_chunks, clear_all, list_documents, search as search_chunks
 
 load_dotenv()
 
@@ -39,14 +40,14 @@ def health():
     return {"status": "ok"}
 
 
-@app.post("/upload")
+@app.post("/upload") #when user clicks upload, triggers api
 async def upload(files: list[UploadFile]) -> list[UploadResponse]:
     UPLOADS_DIR.mkdir(exist_ok=True)
     responses = []
 
     for file in files:
-        pdf_bytes = await file.read()
-        (UPLOADS_DIR / file.filename).write_bytes(pdf_bytes)
+        pdf_bytes = await file.read() #fastapi
+        (UPLOADS_DIR / file.filename).write_bytes(pdf_bytes) #pathlib
 
         pages = parse_pdf(pdf_bytes)
         chunks = chunk_pages(pages, document_name=file.filename)
@@ -62,6 +63,12 @@ async def upload(files: list[UploadFile]) -> list[UploadResponse]:
         )
 
     return responses
+
+
+@app.get("/documents")
+def documents() -> list[DocumentInfo]:
+    """List every document currently in the vector store, including ones from past sessions."""
+    return [DocumentInfo(**doc) for doc in list_documents()]
 
 
 @app.delete("/clear")

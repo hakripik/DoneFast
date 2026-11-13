@@ -14,11 +14,9 @@ export default function ResultPanel({
   const citedDocuments = [...new Set(result.citations.map((c) => c.document_name))]
 
   return (
-    <section className="motion-safe:animate-[fade-in_0.3s_ease-out] rounded-lg border border-line bg-paper-raised p-5">
-      <p className="text-xs font-semibold tracking-widest text-ink-muted uppercase">
-        Answer
-      </p>
-      <p className="mt-2 max-w-prose text-base leading-relaxed text-ink">
+    <section className="motion-safe:animate-[fade-in_0.3s_ease-out] rounded-xl border border-line bg-paper-raised p-5">
+      <p className="font-display text-xl font-semibold text-ink">Answer</p>
+      <p className="mt-3 max-w-prose text-base leading-relaxed text-ink">
         {result.answer}
       </p>
 

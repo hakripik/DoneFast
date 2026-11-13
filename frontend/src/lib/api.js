@@ -30,6 +30,14 @@ export async function uploadDocuments(files) {
   return res.json()
 }
 
+export async function fetchDocuments() {
+  const res = await fetch(`${API_BASE}/documents`)
+  if (!res.ok) {
+    throw new Error(await parseErrorMessage(res, `Loading the library failed (${res.status}).`))
+  }
+  return res.json()
+}
+
 export async function clearLibrary() {
   const res = await fetch(`${API_BASE}/clear`, { method: 'DELETE' })
   if (!res.ok) {

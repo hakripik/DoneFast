@@ -1,17 +1,16 @@
 export default function Header() {
   return (
-    <header className="border-b border-line bg-paper-raised">
+    <header className="bg-accent">
       <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4 sm:px-6">
-        <span
-          className="flex h-8 w-8 shrink-0 rotate-[-4deg] items-center justify-center rounded-sm border-2 border-accent font-mono text-xs font-bold text-accent"
-          aria-hidden="true"
-        >
-          SA
-        </span>
-        <div>
-          <h1 className="font-display text-xl font-semibold text-ink">Study Assistant</h1>
-          <p className="hidden text-xs text-ink-muted sm:block">
-            Ask your notes anything. Every answer shows its work.
+        <img
+          src="/DoneFastLogo.png"
+          alt="DoneFast logo"
+          className="h-10 w-10 shrink-0 object-contain"
+        />
+        <div className="min-w-0 flex-1">
+          <h1 className="font-display text-xl font-semibold text-white">DoneFast</h1>
+          <p className="hidden text-xs text-white/70 sm:block">
+            Your Reliable Study Assistant.
           </p>
         </div>
       </div>

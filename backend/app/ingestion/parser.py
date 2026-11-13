@@ -6,7 +6,7 @@ import fitz  # PyMuPDF
 
 # A line is treated as a heading if its font size is at least this many
 # points larger than the page's most common (body) font size.
-HEADING_SIZE_DELTA = 2.0
+HEADING_SIZE_DELTA = 2.0 #the difference
 
 
 @dataclass
@@ -38,19 +38,18 @@ def parse_pdf(pdf_bytes: bytes) -> list[ParsedPage]:
                     continue
 
                 if max_size >= body_size + HEADING_SIZE_DELTA:
-                    headings.append((line_text.strip(), char_offset))
+                    headings.append((line_text.strip(), char_offset)) #add heading
 
                 text_parts.append(line_text)
                 char_offset += len(line_text)
 
         pages.append(
-            ParsedPage(
+            ParsedPage( #info gets added to class then passed to chunker
                 page_number=page_index + 1,
                 text="".join(text_parts),
                 headings=headings,
             )
         )
-
     doc.close()
     return pages
 

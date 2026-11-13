@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
   checkHealth,
+  fetchDocuments,
   uploadDocuments,
   clearLibrary,
   askQuestion,
@@ -33,6 +34,10 @@ function App() {
     checkHealth()
       .then(() => setBackendOnline(true))
       .catch(() => setBackendOnline(false))
+
+    fetchDocuments()
+      .then(setDocuments)
+      .catch(() => {})
   }, [])
 
   const handleUpload = async (files) => {
@@ -133,7 +138,7 @@ function App() {
               hasDocuments={documents.length > 0}
             />
 
-            {askResult && (
+            {askResult ? (
               <ResultPanel
                 question={askedQuestion}
                 result={askResult}
@@ -143,6 +148,31 @@ function App() {
                 exporting={exporting}
                 exportError={exportError}
               />
+            ) : (
+              <section className="rounded-xl border border-line bg-paper-raised p-5">
+                <p className="font-display text-xl font-semibold text-ink">Answer</p>
+                <div className="flex flex-col items-center gap-3 py-14 text-center">
+                  <span
+                    className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-soft text-accent"
+                    aria-hidden="true"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+                      <path
+                        d="M12 6c-1.8-1.2-4-2-6-2v14c2 0 4.2.8 6 2m0-14c1.8-1.2 4-2 6-2v14c-2 0-4.2.8-6 2m0-14v14"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <p className="text-sm text-ink-muted">
+                    Your answer will appear here.
+                    <br />
+                    Ask a question to get started!
+                  </p>
+                </div>
+              </section>
             )}
           </div>
         </div>

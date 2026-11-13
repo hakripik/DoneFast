@@ -16,7 +16,7 @@ STICKY_NOTE_POINT = fitz.Point(36, 36)  # inside the top-left page margin
 # source PDF's own page size — source pages can be small (e.g. slide decks),
 # and PyMuPDF's insert_textbox silently drops ALL text if it overflows the box,
 # rather than truncating, so an undersized page can end up with a blank summary.
-SUMMARY_PAGE_SIZE = (595, 842)
+SUMMARY_PAGE_SIZE = (595, 842) #A4 in points
 SUMMARY_MARGIN = 36
 MIN_FONT_SIZE = 6
 

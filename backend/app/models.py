@@ -1,6 +1,6 @@
 """Pydantic request/response schemas."""
 
-from pydantic import BaseModel
+from pydantic import BaseModel #lib for data validation, parsing and serailisation through inheritance
 
 
 class Chunk(BaseModel):
@@ -51,6 +51,12 @@ class AskResponse(BaseModel):
     retried: bool
     confidence: int
     confidence_breakdown: list[str]
+
+
+class DocumentInfo(BaseModel):
+    document_name: str
+    total_pages: int
+    total_chunks: int
 
 
 class ClearResponse(BaseModel):

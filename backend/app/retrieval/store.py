@@ -38,6 +38,27 @@ def add_chunks(chunks: list[Chunk]) -> None:
     )
 
 
+def list_documents() -> list[dict]:
+    """Return per-document page/chunk counts for every document in the store."""
+    results = _collection.get(include=["metadatas"])
+
+    stats: dict[str, dict] = {}
+    for metadata in results["metadatas"]:
+        name = metadata["document_name"]
+        entry = stats.setdefault(name, {"document_name": name, "total_chunks": 0, "pages": set()})
+        entry["total_chunks"] += 1
+        entry["pages"].add(metadata["page_number"])
+
+    return [
+        {
+            "document_name": entry["document_name"],
+            "total_pages": len(entry["pages"]),
+            "total_chunks": entry["total_chunks"],
+        }
+        for entry in stats.values()
+    ]
+
+
 def clear_all() -> None:
     """Delete every chunk from the vector store."""
     global _collection
